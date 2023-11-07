@@ -1,0 +1,46 @@
+.itemContainer {
+  height: 250px;
+  width: 200px;
+  border: 1px;
+  margin: 20px;
+  border-radius: 5%;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.imageContainer {
+  flex: 3;
+  width: 100%;
+  border-radius: 5% 5% 0 0;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  display: flex;
+}
+
+.image {
+  /* display: block;
+  margin: auto auto; */
+  height: 100px;
+  width: 100px;
+}
+
+.imageContainer::before {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+  width: 75%;
+  border-bottom: 2px solid gray;
+  z-index: 1;
+  content: '';
+}
+
+.descriptionContainer {
+  flex: 1;
+  padding: 10px;
+}

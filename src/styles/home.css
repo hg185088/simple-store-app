@@ -1,0 +1,32 @@
+.home-container {
+  margin-right: 50;
+  margin-left: 50;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  padding-left: 85px;
+  padding-right: 85px;
+  /* height: 1000px; */
+}
+
+.home-main-window {
+  height: 400px;
+  margin-bottom: 50px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-main-image {
+  height: 300px;
+  width: 300px;
+  transition: transform 0.7s ease-in-out;
+}
+.home-main-image:hover {
+  transition: rotate(360deg);
+}
+
+.home-bottom-carousel {
+  height: 250px;
+  background-color: white;
+}

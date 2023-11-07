@@ -1,0 +1,59 @@
+html,
+body {
+  height: 100%;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+.header-container {
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  background-color: whitesmoke;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-title {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid black;
+}
+
+.header-nav-container {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  border-bottom: 2px solid black;
+}
+
+.header-category {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-category:hover {
+  background-color: white;
+}
+
+.header-log-out-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  margin: 10px;
+}
+
+.header-title {
+  flex: 1;
+}
