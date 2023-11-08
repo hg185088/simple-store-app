@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { Layout } from '../components';
 import { createUser } from '../api';
+import { useNavigate } from 'react-router-dom';
 
 export const SignUp = () => {
   const [name, setName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const navigation = useNavigate();
 
   const handleSubmit = async () => {
     const response = await createUser({ name, email, username, password });
-    console.log(response.data);
+
+    if (response.status == 200) {
+      navigation('/auth/login');
+    }
   };
 
   return (
