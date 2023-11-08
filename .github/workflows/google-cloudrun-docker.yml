@@ -45,15 +45,16 @@
 name: Build and Deploy to Cloud Run
 
 on:
+  workflow_dispatch:
   push:
-    branches: [ "master" ]
+    branches: ['master']
 
 env:
   PROJECT_ID: 'innovation-lab-poc' # TODO: update Google Cloud project id
-  GAR_LOCATION: 'us-east1'  # TODO: update Artifact Registry location
+  GAR_LOCATION: 'us-east1' # TODO: update Artifact Registry location
   SERVICE: 'react-front-end-asm-training-hunter-giles' # TODO: update Cloud Run service name
   ARTIFACTORY: 'us-east1-docker.pkg.dev/innovation-lab-poc/react-store-frontend/fe-images'
-  REGION: 'us-east1'  # TODO: update Cloud Run service region
+  REGION: 'us-east1' # TODO: update Cloud Run service region
 
 jobs:
   deploy:
