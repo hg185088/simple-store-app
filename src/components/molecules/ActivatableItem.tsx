@@ -1,16 +1,18 @@
 import React from 'react';
 import { Item } from '..';
-import { ItemProps } from './Item';
-import { itemStore } from '../../redux/store';
 import { ItemActionType } from '../../redux/itemSlice';
+import { useAuthReducer } from '../../redux/store';
+import { AuthState } from '../../redux/authSlice';
 
 interface ActivatableItemProps {
   item: Item;
 }
 
 export const ActivatableItem = (props: ActivatableItemProps) => {
+  const [auth, dispatch] = useAuthReducer({} as AuthState);
+
   const handleActivateItem = () => {
-    itemStore.dispatch({
+    dispatch({
       type: ItemActionType.setActiveItem,
       payload: { isActive: true, item: props.item },
     });

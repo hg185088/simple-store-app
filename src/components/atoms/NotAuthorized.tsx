@@ -1,6 +1,5 @@
 import React from 'react';
 import '../../styles/auth.css';
-import { authStore } from '../../redux/store';
 import style from '../../styles/NotAuthorized.module.css';
 import { useNavigate } from 'react-router-dom';
 

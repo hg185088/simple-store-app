@@ -1,7 +1,7 @@
 import axios from 'axios';
 import urlcat from 'urlcat';
 import { AuthActionType } from '../redux/authSlice';
-import { authStore } from '../redux/store';
+import { store } from '../redux/store';
 
 import { BASE_URL } from '../config';
 
@@ -58,7 +58,7 @@ export const createUser = async (user: CreateUser) => {
 };
 
 export const getUserWithReauth = async (user: LoginUser) => {
-  const response = await getUser(user, authStore.getState().token);
+  const response = await getUser(user, store.getState().auth.token);
 
   if (response?.status === 401) {
     const getTokenResponse = await getToken(user);
@@ -67,14 +67,14 @@ export const getUserWithReauth = async (user: LoginUser) => {
     if (getTokenResponse.data) {
       const newUser = await getUser(user, token);
 
-      authStore.dispatch({
+      store.dispatch({
         type: AuthActionType.setCredentials,
         payload: { user: newUser, token },
       });
 
       return newUser;
     } else {
-      authStore.dispatch({ type: AuthActionType.logout });
+      store.dispatch({ type: AuthActionType.logout });
     }
   }
   return response;

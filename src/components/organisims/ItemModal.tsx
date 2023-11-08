@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Item } from '..';
 import style from '../../styles/itemModal.module.css';
-import { itemStore, useItemStore } from '../../redux/store';
-import {
-  ItemActionType,
-  itemReducer,
-  selectActiveItem,
-  selectIsActive,
-} from '../../redux/itemSlice';
+import { useItemReducer } from '../../redux/store';
+import { ItemActionType, ItemState } from '../../redux/itemSlice';
 
 interface ItemModuleProps {
   item: Item;
@@ -15,10 +10,11 @@ interface ItemModuleProps {
 }
 
 export const ItemModal = () => {
-  const { isActive, item } = useItemStore();
+  const [itemState, dispatch] = useItemReducer({} as ItemState);
+  const { isActive, item } = itemState;
 
   const handleExitModal = () => {
-    itemStore.dispatch({ type: ItemActionType.clearActiveItem });
+    dispatch({ type: ItemActionType.clearActiveItem });
   };
 
   const handleRickRoll = () => {
