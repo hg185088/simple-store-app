@@ -1,6 +1,6 @@
 import axios from 'axios';
 import urlcat from 'urlcat';
-import { authStore } from '../redux/store';
+import { store } from '../redux/store';
 import { getToken } from '.';
 import { GetTokenResponse } from './userApi';
 import { AuthActionType } from '../redux/authSlice';
@@ -20,7 +20,7 @@ const getAllProducts = async (token: string, query: string = '') => {
 };
 
 export const getAllProductsWithReauth = async (query: string = '') => {
-  const { user, token } = authStore.getState();
+  const { user, token } = store.getState().auth;
   const response = await getAllProducts(token, query);
 
   if (response?.status === 401) {
@@ -28,14 +28,13 @@ export const getAllProductsWithReauth = async (query: string = '') => {
     const token = (getTokenResponse.data as GetTokenResponse).access_token;
 
     if (getTokenResponse.data) {
-      authStore.dispatch({
+      store.dispatch({
         type: AuthActionType.setCredentials,
-        payload: { token },
+        payload: { user, token },
       });
-
       return await getAllProducts(token, query);
     } else {
-      authStore.dispatch({ type: AuthActionType.logout });
+      store.dispatch({ type: AuthActionType.logout });
     }
   }
   return response;

@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Layout } from '../components';
 import { getUserWithReauth } from '../api/userApi';
-import { authStore } from '../redux/store';
-import { AuthActionType } from '../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 
 export const Login = () => {
