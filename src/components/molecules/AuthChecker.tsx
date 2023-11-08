@@ -6,38 +6,20 @@ import { NotAuthorized } from '../atoms/NotAuthorized';
 interface AuthCheckerProps {
   public?: boolean;
   registerUserAccess?: boolean;
+  children: React.ReactNode;
 }
 
-export const AuthChecker = (props: React.PropsWithChildren<AuthCheckerProps>) => {
-  const children = props.children;
+export const AuthChecker = (props: AuthCheckerProps) => {
   const user = selectCurrentUser(authStore.getState());
   const isRegisteredUser = user.email != '' ? true : false;
-  console.log('user in auth checker', user);
 
   if (props.registerUserAccess) {
     if (isRegisteredUser) {
-      return children;
+      return <>{props.children}</>;
     } else {
       return <NotAuthorized />;
     }
   } else {
-    return children;
+    return <>{props.children}</>;
   }
 };
-
-// const AuthRoute = () => {
-//   return (
-//     <Routes>
-//       <Route path='/auth/logIn' element={<Login />} />
-//       <Route path='/auth/signUp' element={<SignUp />} />
-//     </Routes>
-//   );
-// };
-
-// const RootRoute = () => {
-//   return (
-//     <Routes>
-//       <Route path='/' element={<Home />} />
-//     </Routes>
-//   );
-// };
