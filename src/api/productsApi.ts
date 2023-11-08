@@ -4,8 +4,7 @@ import { authStore } from '../redux/store';
 import { getToken } from '.';
 import { GetTokenResponse } from './userApi';
 import { AuthActionType } from '../redux/authSlice';
-import { Item } from '../components/molecules/Item';
-const BASE_URL = 'http://127.0.0.1:3000';
+import { BASE_URL } from '../config';
 
 const getAllProducts = async (token: string, query: string = '') => {
   const url = urlcat(BASE_URL, `/store/products${query}`);

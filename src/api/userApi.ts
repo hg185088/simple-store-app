@@ -3,7 +3,7 @@ import urlcat from 'urlcat';
 import { AuthActionType } from '../redux/authSlice';
 import { authStore } from '../redux/store';
 
-const BASE_URL = 'http://127.0.0.1:3000';
+import { BASE_URL } from '../config';
 
 export interface BaseUser {
   username: string;
