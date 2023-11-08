@@ -1,33 +1,33 @@
-import { createStore } from 'redux';
+import { combineReducers, createStore } from 'redux';
 import { authReducer } from '.';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { persistStore, persistReducer } from 'redux-persist';
+import { persistStore, persistReducer, PersistConfig } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
 import { AuthState } from './authSlice';
 import { ItemState, itemReducer } from './itemSlice';
-import { useEffect, useState } from 'react';
+import { Dispatch, useEffect, useState } from 'react';
 
 const persistConfig = {
-  key: 'auth',
+  key: 'root',
   storage: storage,
-  stateReconciler: autoMergeLevel2,
+  whitelist: ['auth'],
 };
 
-export const pReducer = persistReducer<AuthState>(persistConfig, authReducer);
+const rootReducer = combineReducers({ auth: authReducer, item: itemReducer });
+const pReducer = persistReducer(persistConfig, rootReducer);
 
-export const authStore = createStore(pReducer, composeWithDevTools());
-export const persistor = persistStore(authStore);
+export const store = createStore(pReducer, composeWithDevTools());
+export const persistor = persistStore(store);
 
-export const itemStore = createStore(itemReducer, composeWithDevTools());
-
-export const useItemStore = () => {
-  const [state, setState] = useState(itemStore.getState());
+export const useItemReducer = (initial: ItemState): [ItemState, Dispatch<any>] => {
+  const [state, setState] = useState<ItemState>(store.getState().item);
+  const dispatch = store.dispatch;
 
   useEffect(() => {
-    const unsubscribe = itemStore.subscribe(() => {
-      setState(itemStore.getState());
+    const unsubscribe = store.subscribe(() => {
+      setState(store.getState().item);
     });
 
     // Cleanup subscription on unmount
@@ -36,15 +36,16 @@ export const useItemStore = () => {
     };
   }, []);
 
-  return state;
+  return [state, dispatch] ?? [initial, dispatch];
 };
 
-export const useAuth = () => {
-  const [state, setState] = useState(authStore.getState());
+export const useAuthReducer = (initial: AuthState): [AuthState, Dispatch<any>] => {
+  const [state, setState] = useState(store.getState().auth);
+  const dispatch = store.dispatch;
 
   useEffect(() => {
-    const unsubscribe = authStore.subscribe(() => {
-      setState(authStore.getState());
+    const unsubscribe = store.subscribe(() => {
+      setState(store.getState().auth);
     });
 
     return () => {
@@ -52,5 +53,5 @@ export const useAuth = () => {
     };
   }, []);
 
-  return state;
+  return [state, dispatch] ?? [initial, dispatch];
 };

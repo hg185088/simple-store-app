@@ -3,9 +3,9 @@ import '../../styles/auth.css';
 import '../../styles/header.css';
 import '../../styles/layout.css';
 import { AuthChecker } from '../molecules/AuthChecker';
-import { authStore } from '../../redux/store';
-import { AuthActionType } from '../../redux/authSlice';
+import { AuthActionType, AuthState } from '../../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { useAuthReducer } from '../../redux/store';
 
 interface LayoutProps {
   registeredUserAccess?: boolean;
@@ -20,6 +20,7 @@ interface CategoryProps {
 
 export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
   const navigation = useNavigate();
+  const [auth, dispatch] = useAuthReducer({} as AuthState);
   const title = 'dice';
 
   const categories = [
@@ -31,7 +32,7 @@ export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
   ];
 
   const handleLogOut = () => {
-    authStore.dispatch({ type: AuthActionType.logout });
+    dispatch({ type: AuthActionType.logout });
     navigation('/auth/login');
   };
 
