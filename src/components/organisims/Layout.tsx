@@ -23,9 +23,8 @@ interface CategoryProps {
 export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
   const navigation = useNavigate();
   const [auth, dispatch] = useAuthReducer({} as any);
-  const [initials, setInitials] = useState<string>(auth.user.name);
+  const [initials, setInitials] = useState<string>(auth.user.name.charAt(0));
   const title = 'dice';
-  console.log('name: ', auth.user.name);
 
   const categories = [
     { name: 'all', endpoint: '/' },
