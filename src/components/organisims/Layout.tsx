@@ -6,6 +6,7 @@ import { AuthChecker } from '../molecules/AuthChecker';
 import { AuthActionType, AuthState } from '../../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useAuthReducer } from '../../redux/store';
+import { ProfileIcon } from '../atoms/ProfileIcon';
 
 interface LayoutProps {
   registeredUserAccess?: boolean;
@@ -47,6 +48,7 @@ export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
             <button className='header-log-out-button' onClick={handleLogOut}>
               logOut
             </button>
+            {/* <ProfileIcon firstInitial='H' /> */}
           </div>
           <div className='header-nav-container'>
             {categories.map((value) => (
