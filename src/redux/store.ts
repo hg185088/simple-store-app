@@ -40,6 +40,7 @@ export const useItemReducer = (initial: ItemState): [ItemState, Dispatch<any>] =
 };
 
 export const useAuthReducer = (initial: AuthState): [AuthState, Dispatch<any>] => {
+  console.log('from ', store.getState().auth);
   const [state, setState] = useState(store.getState().auth);
   const dispatch = store.dispatch;
 

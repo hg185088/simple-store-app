@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../../styles/auth.css';
 import '../../styles/header.css';
 import '../../styles/layout.css';
@@ -7,6 +7,7 @@ import { AuthActionType, AuthState } from '../../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { useAuthReducer } from '../../redux/store';
 import { ProfileIcon } from '../atoms/ProfileIcon';
+import Person2Icon from '@mui/icons-material/Person2';
 
 interface LayoutProps {
   registeredUserAccess?: boolean;
@@ -21,8 +22,10 @@ interface CategoryProps {
 
 export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
   const navigation = useNavigate();
-  const [auth, dispatch] = useAuthReducer({} as AuthState);
+  const [auth, dispatch] = useAuthReducer({} as any);
+  const [initials, setInitials] = useState<string>(auth.user.name);
   const title = 'dice';
+  console.log('name: ', auth.user.name);
 
   const categories = [
     { name: 'all', endpoint: '/' },
@@ -45,10 +48,9 @@ export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
         <div className='header-container'>
           <div className='header-title'>
             <h1>{title}</h1>
-            <button className='header-log-out-button' onClick={handleLogOut}>
-              logOut
-            </button>
-            {/* <ProfileIcon firstInitial='H' /> */}
+            <div onClick={handleLogOut}>
+              <ProfileIcon firstInitial={initials} />
+            </div>
           </div>
           <div className='header-nav-container'>
             {categories.map((value) => (

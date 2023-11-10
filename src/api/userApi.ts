@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import urlcat from 'urlcat';
-import { AuthActionType } from '../redux/authSlice';
+import { AuthActionType, CurrentUser } from '../redux/authSlice';
 import { store } from '../redux/store';
 
 import { BASE_URL } from '../config';
@@ -24,34 +24,40 @@ export interface LoginUser {
 export interface GetTokenResponse {
   access_token: string;
 }
+export interface BadTokenError {
+  message: string;
+  statusCode: number;
+}
 
 export const getToken = async (user: LoginUser) => {
   try {
     return await axios.post(urlcat(BASE_URL, 'auth/login'), user);
-  } catch {
+  } catch (e) {
+    console.log(e);
     throw Error('getToken failed');
   }
 };
 
-const getUser = async (user: LoginUser, token: string) => {
+const getUser = async (user: LoginUser, token: string): Promise<AxiosResponse> => {
   try {
-    return await axios
+    const response = await axios
       .post(urlcat(BASE_URL, 'users/login'), user, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
       })
-      .catch((error) => error.response);
+      .catch((e) => e.response);
+
+    return response;
   } catch (e) {
     throw Error('getUser failed');
   }
 };
 
-export const createUser = async (user: CreateUser) => {
+export const createUser = async (user: CreateUser): Promise<AxiosResponse<string, any>> => {
   try {
-    const response = await axios.post(urlcat(BASE_URL, '/users'), user);
-    return response;
+    return await axios.post(urlcat(BASE_URL, '/users'), user);
   } catch (e) {
     throw Error('create User failed');
   }
@@ -69,7 +75,7 @@ export const getUserWithReauth = async (user: LoginUser) => {
 
       store.dispatch({
         type: AuthActionType.setCredentials,
-        payload: { user: newUser, token },
+        payload: { user: newUser.data, token },
       });
 
       return newUser;

@@ -6,5 +6,9 @@ interface ProfileIconProps {
 }
 
 export const ProfileIcon = (props: ProfileIconProps) => {
-  return <div className={style.container}>{props.firstInitial}</div>;
+  return (
+    <div className={style.container}>
+      <div className={style.text}>{props.firstInitial}</div>
+    </div>
+  );
 };
