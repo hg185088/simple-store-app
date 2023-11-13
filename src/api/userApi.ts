@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import urlcat from 'urlcat';
-
 import { store } from '../redux/store';
 
 import { BASE_URL } from '../config';

@@ -5,12 +5,14 @@ import { ItemActionType } from '../../redux/item/models/actions';
 import { useAuthReducer } from '../../redux/hooks/authHook';
 import style from '../../styles/Item.module.css';
 
+
 interface ActivatableItemProps {
   item: Item;
 }
 
 export const ActivatableItem = (props: ActivatableItemProps) => {
   const [auth, dispatch] = useAuthReducer({} as AuthState);
+
   const [isHovered, setIsHovered] = useState(false);
 
   const hoverStyle = {

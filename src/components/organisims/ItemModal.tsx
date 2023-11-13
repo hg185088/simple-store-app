@@ -16,6 +16,7 @@ interface ItemModuleProps {
 export const ItemModal = () => {
   const appDispatch = useAppDispatch();
   const cart = useAppSelector(selectCart);
+
   const [itemState, dispatch] = useItemReducer({} as ItemState);
   const { isActive, item } = itemState;
 
