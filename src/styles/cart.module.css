@@ -23,3 +23,19 @@
 .button:hover {
   background-color: rgb(227, 189, 189);
 }
+
+.checkout {
+  cursor: pointer;
+  background-color: green;
+  width: 200px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  border-radius: 15px;
+}
+
+.checkout:hover {
+  background-color: rgb(158, 204, 158);
+}

@@ -30,6 +30,7 @@ export const ItemModal = () => {
 
   const handleAddItemToCart = () => {
     appDispatch(addItemToCart(item));
+    alert('🛍️ Item added to cart!');
   };
 
   return isActive ? (
