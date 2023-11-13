@@ -66,3 +66,7 @@
   align-items: center;
   margin: 20px;
 }
+
+.addToCartButton:hover {
+  background-color: rgb(158, 204, 158);
+}

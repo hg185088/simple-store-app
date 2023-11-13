@@ -1,35 +1,15 @@
 import { Reducer } from 'redux';
-import { Item } from '../components';
+import { Item } from '../../components';
 import { useEffect, useState } from 'react';
-
-export interface ItemState {
-  item: Item;
-  isActive: boolean;
-}
-
-export enum ItemActionType {
-  setActiveItem = 'item/setActiveItem',
-  clearActiveItem = 'item/clearActiveItem',
-}
-
-interface SetActiveItemAction {
-  type: ItemActionType.setActiveItem;
-  payload: ItemState;
-}
-
-interface ClearActiveItemAction {
-  type: ItemActionType.clearActiveItem;
-}
+import { ItemState } from './models/state';
+import { ItemActionType, ItemActionUnion } from './models/actions';
 
 const initialState: ItemState = {
-  item: { category: '', description: '', image: '', price: 0, title: '' },
+  item: { category: '', description: '', image: '', price: 0, title: '', id: 0 },
   isActive: false,
 };
 
-export const itemReducer: Reducer<ItemState, SetActiveItemAction | ClearActiveItemAction> = (
-  state = initialState,
-  action,
-) => {
+export const itemReducer: Reducer<ItemState, ItemActionUnion> = (state = initialState, action) => {
   switch (action.type) {
     case ItemActionType.setActiveItem: {
       const { item, isActive } = action.payload;

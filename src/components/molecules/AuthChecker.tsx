@@ -1,7 +1,8 @@
 import React from 'react';
-import { store, useAuthReducer } from '../../redux/store';
-import { AuthState, selectCurrentUser } from '../../redux/authSlice';
+import { store } from '../../redux/store';
 import { NotAuthorized } from '../atoms/NotAuthorized';
+import { AuthState } from '../../redux/auth/models/state';
+import { useAuthReducer } from '../../redux/hooks/authHook';
 
 interface AuthCheckerProps {
   public?: boolean;

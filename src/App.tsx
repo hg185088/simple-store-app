@@ -8,6 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './redux/store';
 import { Loading } from './components';
 import { Electronics } from './pages/tabs/Electronics';
+import { Cart } from './pages/Cart';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ const RootRoute = () => {
       <Route path='/jewelry' element={<Jewelery />} />
       <Route path='/auth/logIn' element={<Login />} />
       <Route path='/auth/signUp' element={<SignUp />} />
+      <Route path='/cart' element={<Cart />} />
     </Routes>
   );
 };

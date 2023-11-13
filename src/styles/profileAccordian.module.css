@@ -1,0 +1,50 @@
+.cardContainer {
+  width: 200px;
+  background-color: rgb(178, 160, 129);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px,
+    rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px,
+    rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.boxContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.text {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.iconContainer {
+  display: flex;
+  border-radius: 25px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: red;
+  width: 40px;
+  height: 40px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.toggleContainer {
+  position: absolute;
+  top: 70px;
+  right: 0px;
+  margin-right: 10px;
+}

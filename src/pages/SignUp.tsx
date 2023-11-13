@@ -13,7 +13,7 @@ export const SignUp = () => {
   const handleSubmit = async () => {
     const response = await createUser({ name, email, username, password });
 
-    if (response.status == 200) {
+    if (response.status == 201) {
       navigation('/auth/login');
     }
   };

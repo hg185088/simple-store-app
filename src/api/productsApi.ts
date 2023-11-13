@@ -3,8 +3,8 @@ import urlcat from 'urlcat';
 import { store } from '../redux/store';
 import { getToken } from '.';
 import { GetTokenResponse } from './userApi';
-import { AuthActionType } from '../redux/authSlice';
 import { BASE_URL } from '../config';
+import { AuthActionType } from '../redux/auth/models/actions';
 
 const getAllProducts = async (token: string, query: string = '') => {
   const url = urlcat(BASE_URL, `/store/products${query}`);
