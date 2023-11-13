@@ -3,110 +3,130 @@ import { store } from '../redux/store';
 import axios from 'axios';
 import urlcat from 'urlcat';
 import { GetTokenResponse, getToken } from './userApi';
-import { AuthActionType } from '../redux/authSlice';
+import { AuthActionType } from '../redux/auth/models/actions';
+import { ErrorEnum } from './models';
 
-const config = (token: string) => {
-  return {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
+export class CartAPI {
+  constructor() {}
+  static config = (token: string) => {
+    return {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    };
   };
-};
 
-const checkOrGetToken = async (): Promise<string> => {
-  const { user, token } = store.getState().auth;
-  const url = urlcat(BASE_URL, `/auth/profile`);
+  async checkOrGetToken(): Promise<string> {
+    const { user, token } = store.getState().auth;
+    const url = urlcat(BASE_URL, `/auth/profile`);
 
-  try {
-    const response = await axios.get(url, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    try {
+      const response = await axios.get(url, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-    if (response.status === 401) {
-      const getTokenResponse = await getToken(user);
-      const token = (getTokenResponse.data as GetTokenResponse).access_token;
+      if (response.status === 401) {
+        const getTokenResponse = await getToken(user);
+        const token = (getTokenResponse.data as GetTokenResponse).access_token;
 
-      if (getTokenResponse.data) {
-        store.dispatch({
-          type: AuthActionType.setCredentials,
-          payload: { user, token },
-        });
+        if (getTokenResponse.data) {
+          store.dispatch({
+            type: AuthActionType.setCredentials,
+            payload: { user, token },
+          });
+        }
+        return token;
       }
       return token;
+    } catch (e) {
+      throw Error('checkOrGetToken failed');
     }
-    return token;
-  } catch (e) {
-    throw Error('checkOrGetToken failed');
-  }
-};
-
-export const createCart = async (userId: string) => {
-  const token = await checkOrGetToken();
-  const url = urlcat(BASE_URL, `/cart/create`);
-
-  const response = await axios.post(url, { userId }, config(token));
-
-  if (response.status === 401) {
-    const retryToken = await checkOrGetToken();
-    return await axios.post(url, { userId }, config(retryToken));
   }
 
-  return response;
-};
+  async createCart(userId: string) {
+    const token = await this.checkOrGetToken();
+    const url = urlcat(BASE_URL, `/cart/create`);
 
-export const deleteCart = async (userId: string) => {
-  const token = await checkOrGetToken();
-  const url = urlcat(BASE_URL, `/cart/delete/${userId}`);
+    const response = await axios.post(url, { userId }, CartAPI.config(token));
 
-  const response = await axios.delete(url, config(token));
+    if (response.status === 401) {
+      const retryToken = await this.checkOrGetToken();
+      return await axios.post(url, { userId }, CartAPI.config(retryToken)).catch((e) => e.response);
+    }
 
-  if (response.status === 401) {
-    const refreshToken = await checkOrGetToken();
-    return await axios.delete(url, config(refreshToken));
+    return response;
   }
 
-  return response;
-};
+  async deleteCart(userId: string) {
+    const token = await this.checkOrGetToken();
+    const url = urlcat(BASE_URL, `/cart/delete/${userId}`);
 
-export const addItemToCart = async (userId: string, itemId: string) => {
-  const token = await checkOrGetToken();
-  const url = urlcat(BASE_URL, `/cart/item/add`);
+    const response = await axios.delete(url, CartAPI.config(token));
 
-  const response = await axios.post(url, { userId, itemId }, config(token));
+    if (response.status === 401) {
+      const refreshToken = await this.checkOrGetToken();
+      return await axios.delete(url, CartAPI.config(refreshToken));
+    }
 
-  if (response.status === 401) {
-    const refreshToken = await checkOrGetToken();
-    return await axios.post(url, { userId, itemId }, config(refreshToken));
+    return response;
   }
 
-  return response;
-};
+  async addItemToCart(userId: string, itemId: number) {
+    const token = await this.checkOrGetToken();
+    const url = urlcat(BASE_URL, `/cart/item/add`);
 
-export const deleteItemFromCart = async (userId: string, itemId: string) => {
-  const token = await checkOrGetToken();
-  const url = urlcat(BASE_URL, `/cart/item/delete/${userId}/${itemId}`);
+    const response = await axios.post(url, { userId, itemId }, CartAPI.config(token));
 
-  const response = await axios.delete(url, config(token));
+    if (response.status === 401) {
+      const refreshToken = await this.checkOrGetToken();
+      return await axios.post(url, { userId, itemId }, CartAPI.config(refreshToken));
+    }
 
-  if (response.status === 401) {
-    const refreshToken = await checkOrGetToken();
-    return await axios.delete(url, config(refreshToken));
+    // if (response.status === 404 && response.data.message === ErrorEnum.NO_ACTIVE_CART) {
+    //   return await this.createCart(userId);
+    // }
+    return response;
   }
 
-  return response;
-};
+  async deleteItemFromCart(userId: string, itemId: number) {
+    const token = await this.checkOrGetToken();
+    const url = urlcat(BASE_URL, `/cart/item/delete/${userId}/${itemId}`);
 
-export const getActiveCart = async (userId: string) => {
-  const token = await checkOrGetToken();
-  const url = urlcat(BASE_URL, `/cart/getactivecart`);
+    const response = await axios.delete(url, CartAPI.config(token));
 
-  const response = await axios.post(url, { userId }, config(token));
+    if (response.status === 401) {
+      const refreshToken = await this.checkOrGetToken();
+      return await axios.delete(url, CartAPI.config(refreshToken));
+    }
 
-  if (response.status === 401) {
-    const refreshToken = await checkOrGetToken();
-    return await axios.post(url, { userId }, config(refreshToken));
+    return response;
   }
 
-  return response;
-};
+  async getCart(userId: string) {
+    const token = await this.checkOrGetToken();
+    const url = urlcat(BASE_URL, `/cart/getactivecart`);
+
+    const response = await axios.post(url, { userId }, CartAPI.config(token));
+
+    if (response.status === 401) {
+      const refreshToken = await this.checkOrGetToken();
+      return await axios.post(url, { userId }, CartAPI.config(refreshToken));
+    }
+
+    // if (response.status === 404 && response.data.message === ErrorEnum.NO_ACTIVE_CART) {
+    //   return await this.createCart(userId);
+    // }
+    return response;
+  }
+
+  // private checkErrorStatus(error: { statusCode: number; message: string }) {
+  //   if (error.statusCode != 404) {
+  //     return;
+  //   }
+  //   switch (error.message) {
+  //     case 'User does not have active cart':
+  //       throw new Error('User does not have active cart');
+  //   }
+  // }
+}

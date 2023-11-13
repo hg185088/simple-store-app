@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Item } from '..';
-import { ItemActionType } from '../../redux/itemSlice';
-import { useAuthReducer } from '../../redux/store';
-import { AuthState } from '../../redux/authSlice';
+import { AuthState } from '../../redux/auth/models/state';
+import { ItemActionType } from '../../redux/item/models/actions';
+import { useAuthReducer } from '../../redux/hooks/authHook';
+import style from '../../styles/Item.module.css';
 
 interface ActivatableItemProps {
   item: Item;
@@ -10,6 +11,11 @@ interface ActivatableItemProps {
 
 export const ActivatableItem = (props: ActivatableItemProps) => {
   const [auth, dispatch] = useAuthReducer({} as AuthState);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const hoverStyle = {
+    backgroundColor: 'rgb(200, 230, 200)',
+  };
 
   const handleActivateItem = () => {
     dispatch({
@@ -18,5 +24,15 @@ export const ActivatableItem = (props: ActivatableItemProps) => {
     });
   };
 
-  return <Item item={props.item} onClick={handleActivateItem} />;
+  return (
+    <div className={style.activatableItem}>
+      <Item
+        item={props.item}
+        onClick={handleActivateItem}
+        style={isHovered ? hoverStyle : {}}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      />
+    </div>
+  );
 };

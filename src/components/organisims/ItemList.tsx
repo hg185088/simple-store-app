@@ -9,7 +9,9 @@ export interface ItemListProps {
 }
 
 export const ItemList = (props: ItemListProps) => {
-  const initialItems: Item[] = [{ category: '', description: '', image: '', price: 0, title: '' }];
+  const initialItems: Item[] = [
+    { category: '', description: '', image: '', price: 0, title: '', id: 0 },
+  ];
   const query = props.query;
   const [items, setItems] = useState<Item[]>(initialItems);
   const [isLoading, setIsLoading] = useState<boolean>(true);

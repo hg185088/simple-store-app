@@ -1,1 +1,1 @@
-export { authReducer } from './authSlice';
+export { authReducer } from './auth/authReducer';

@@ -1,9 +1,10 @@
 import axios, { AxiosResponse } from 'axios';
 import urlcat from 'urlcat';
-import { AuthActionType, CurrentUser } from '../redux/authSlice';
+
 import { store } from '../redux/store';
 
 import { BASE_URL } from '../config';
+import { AuthActionType } from '../redux/auth/models/actions';
 
 export interface BaseUser {
   username: string;

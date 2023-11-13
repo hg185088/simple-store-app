@@ -4,7 +4,9 @@ import { getAllProductsWithReauth } from '../../api';
 import style from '../../styles/carousel.module.css';
 
 export const ItemCarousel = () => {
-  const initialItems: Item[] = [{ category: '', description: '', image: '', price: 0, title: '' }];
+  const initialItems: Item[] = [
+    { category: '', description: '', image: '', price: 0, title: '', id: 0 },
+  ];
   const items = useRef<Item[]>(initialItems);
   const pointer = useRef<number>(0);
   const [group, setGroup] = useState<Item[]>(initialItems);

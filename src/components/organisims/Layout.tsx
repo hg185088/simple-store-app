@@ -1,13 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import '../../styles/auth.css';
 import '../../styles/header.css';
 import '../../styles/layout.css';
 import { AuthChecker } from '../molecules/AuthChecker';
-import { AuthActionType, AuthState } from '../../redux/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { useAuthReducer } from '../../redux/store';
-import { ProfileIcon } from '../atoms/ProfileIcon';
-import Person2Icon from '@mui/icons-material/Person2';
+import { ProfileModal } from '../molecules/ProfileModal';
+import { useAuthReducer } from '../../redux/hooks/authHook';
 
 interface LayoutProps {
   registeredUserAccess?: boolean;
@@ -34,21 +32,16 @@ export const Layout: React.FC<LayoutProps> = (props: LayoutProps) => {
     { name: "women's clothing", endpoint: '/womensclothing' },
   ];
 
-  const handleLogOut = () => {
-    dispatch({ type: AuthActionType.logout });
-    navigation('/auth/login');
-  };
-
   return (
     <div className='container'>
       {props.headerOff ? (
         <></>
       ) : (
         <div className='header-container'>
-          <div className='header-title'>
-            <h1>{title}</h1>
-            <div onClick={handleLogOut}>
-              <ProfileIcon firstInitial={initials} />
+          <div className='header-top'>
+            <h1 className='header-title'>{title}</h1>
+            <div className='header-profile'>
+              <ProfileModal />
             </div>
           </div>
           <div className='header-nav-container'>

@@ -6,3 +6,4 @@ export { ItemCarousel } from './organisims/ItemCarousel';
 export { Item } from './molecules/Item';
 export { ItemList } from './organisims/ItemList';
 export { HomeBanner } from './molecules/HomeBanner';
+export { CartItemList } from './organisims/CartItemList';
