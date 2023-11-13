@@ -33,7 +33,6 @@ export const getToken = async (user: LoginUser) => {
   try {
     return await axios.post(urlcat(BASE_URL, 'auth/login'), user);
   } catch (e) {
-    console.log(e);
     throw Error('getToken failed');
   }
 };

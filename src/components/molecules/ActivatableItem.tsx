@@ -5,7 +5,6 @@ import { ItemActionType } from '../../redux/item/models/actions';
 import { useAuthReducer } from '../../redux/hooks/authHook';
 import style from '../../styles/Item.module.css';
 
-
 interface ActivatableItemProps {
   item: Item;
 }

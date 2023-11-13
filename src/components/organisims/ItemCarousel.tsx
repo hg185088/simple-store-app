@@ -15,7 +15,6 @@ export const ItemCarousel = () => {
   useEffect(() => {
     const fetchData = async () => {
       const response = await getAllProductsWithReauth();
-      console.log('fetching items...');
       const data = response.data;
 
       items.current = data;
