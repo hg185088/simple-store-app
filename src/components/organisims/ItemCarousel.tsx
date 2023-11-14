@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Item } from '../molecules/Item';
 import { getAllProductsWithReauth } from '../../api';
 import style from '../../styles/carousel.module.css';
+import { ActivatableItem } from '../molecules/ActivatableItem';
 
 export const ItemCarousel = () => {
   const initialItems: Item[] = [
@@ -61,7 +62,7 @@ export const ItemCarousel = () => {
       <div className={style.carousel}>
         {group.map((item) => (
           <div className={style.inner}>
-            <Item item={item} />
+            <ActivatableItem item={item} />
           </div>
         ))}
       </div>
